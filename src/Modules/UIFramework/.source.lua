@@ -36,7 +36,7 @@ end
 function UIFramework:CreateElement(Component : string, Properties : table?, Children : table?,Class : string?) : table
     if(Component == "Slider") then  
         local ObjSlider = Slider.new(Properties)
-        if (ObjSlider:GetParent() == nil) then
+        if (ObjSlider:GetParent() == nil) then -- Set the Parent of the Slider to either The screengui or the Parented Element
             ObjSlider.Parent = self.ScreenGui; 
         end
         return ObjSlider

@@ -1,13 +1,13 @@
 local Slider = {}
 Slider.__index = Slider
 -- Whenever the Slider is moving, just fire the ChangedBindable in it
-
-function Slider.new(Properties,InitialPosition : number?, Minimum : number?, Maximum : number?)
+--,InitialPosition : number?, Minimum : number?, Maximum : number?
+function Slider.new(Properties)
     local self = setmetatable({},Slider);
     self.Properties = Properties or {}
-    self.InitialPosition = InitialPosition or 0
-    self.Minimum = Minimum or 0;
-    self.Maximum = Maximum or 0
+    self.InitialPosition = 0
+    self.Minimum = 0
+    self.Maximum = 0
 
     --#Elements maybe use the X:Createelement("Slider)
     self.Container = Instance.new("Frame")
@@ -15,7 +15,7 @@ function Slider.new(Properties,InitialPosition : number?, Minimum : number?, Max
     self.Slider = Instance.new("ImageButton")
     self.Label = Instance.new("TextLabel")
 
-    --# Events
+    --#Events
     self.ChangedBindable = Instance.new("BindableEvent")
     self.DraggedBindable = Instance.new("BindableEvent")
     self.ReleasedBindable = Instance.new("BindableEvent")
@@ -30,7 +30,7 @@ end
 ]]
 
 function Slider:SetProperties(Properties : table)
-    
+
 end
 
 
@@ -41,6 +41,8 @@ function Slider:__index(key)
         return self.DraggedBindable.Event
     elseif (key == "Released") then
         return self.ReleasedBindable.Event
+    elseif (key == "Parent") then
+        return self.Container.Parent
     else 
         return rawset(self,key)
     end

@@ -1,14 +1,12 @@
 --#Game Service
 local TweenService = game:GetService("TweenService");
---#Custom Elements
-local Slider = require(script.Slider);
 --#Modules/Config
 local AnimationConfig = require(script.Animation);
 --#Events
 local Element = {}
 Element.__index = Element
 
-function Element.new(Component : string, Properties : table?, Children : table)
+function Element.new(Component : string, Properties : table?, Children : table?)
     local self = setmetatable({},Element)
     -- Check If Component Is even a thing cuh
     self.Component = Instance.new(Component)

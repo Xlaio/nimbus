@@ -5,8 +5,9 @@ local Players = game:GetService("Players");
 -- Local Veriables
 local LocalPlayer = Players.LocalPlayer
 local PlayerGui = LocalPlayer.PlayerGui
---
+--Element
 local Element = require(script.Element)
+local Slider = require(script.Slider)
 -- StyleSheet 
 local stylesheet = require(script.stylesheet) -- Can't be changed.
 local UIFramework = {} 
@@ -33,7 +34,13 @@ function UIFramework.new(name : string?,Theme : string?)
 end
 -- use UIFramework:CreateElement("Element", {} : Properties, {} : children)
 function UIFramework:CreateElement(Component : string, Properties : table?, Children : table?,Class : string?) : table
-
+    if(Component == "Slider") then  
+        local ObjSlider = Slider.new(Properties)
+        if (ObjSlider:GetParent() == nil) then
+            ObjSlider.Parent = self.ScreenGui; 
+        end
+        return ObjSlider
+    end
     local ObjElement = Element.new(Component,Properties,Children)
     -- Set the properitys of the element; 
     for key, value in pairs(self.Theme[Component]) do
@@ -43,13 +50,13 @@ function UIFramework:CreateElement(Component : string, Properties : table?, Chil
             ObjElement.Component[key] = value
         end
     end
-    if (typeof(Element.Children) == "table")  then   
+    if (typeof(ObjElement.Children) == "table")  then   
         if (ObjElement.Children) then
-            for _, child in pairs(Element.Children) do
-                child.Parent = Element.Component
+            for _, child in pairs(ObjElement.Children) do
+                child.Parent = ObjElement.Component
             end
         end
-    elseif (typeof(Element.Children) == "Instance") then
+    elseif (typeof(ObjElement.Children) == "Instance") then
         ObjElement.Children.Parent = Element.Component
     end
 
@@ -58,8 +65,7 @@ function UIFramework:CreateElement(Component : string, Properties : table?, Chil
     if (ObjElement:GetParent() == nil) then
         ObjElement.Component.Parent = self.ScreenGui
     end
-    -- self.Elements[newElement.Name] = newElement
-    -- self.LastCreatedElement = newElement
+
     self.Elements[ObjElement:GetSelf()] = ObjElement:GetSelf()
     return ObjElement
 end

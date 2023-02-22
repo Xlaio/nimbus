@@ -1,5 +1,7 @@
 --#Game Service
 local TweenService = game:GetService("TweenService");
+--#Custom Elements
+local Slider = require(script.Slider);
 --#Modules/Config
 local AnimationConfig = require(script.Animation);
 --#Events

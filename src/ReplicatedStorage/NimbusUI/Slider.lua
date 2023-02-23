@@ -2,7 +2,7 @@ local Slider = {}
 Slider.__index = Slider
 -- Whenever the Slider is moving, just fire the ChangedBindable in it
 --,InitialPosition : number?, Minimum : number?, Maximum : number?
-function Slider.new(Properties: table, SnappingPoints : table?)
+function Slider.new(Properties: table, SnappingPoints : table?,FindNearestSnapPoint : boolean?)
     local self = setmetatable({},Slider);
     self.Properties = Properties or {}
     self.SnappingPoints = SnappingPoints or {}
@@ -12,7 +12,7 @@ function Slider.new(Properties: table, SnappingPoints : table?)
     self.Maximum = 0
     --#Slider Logic 
     self.Dragging = false
-    self.FindNearestSnapPoint = true
+    self.FindNearestSnapPoint = true or FindNearestSnapPoint
     --#Elements maybe use the X:Createelement("Slider)
     self.Container = Instance.new("Frame")
     self.Line = Instance.new("Frame")
@@ -32,10 +32,6 @@ end
     Label, Properties would include, The Text label size
     Slider, Would include the Size : Heigh = Widthl, Using font Awesome images 
 ]]
-function Slider()
-    
-end
-
 function Slider:SetSnappingPoints(SnappingPoints : table)
     
 end

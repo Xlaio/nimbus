@@ -63,7 +63,7 @@ function UIFramework:CreateElement(Component : string, Properties : table?, Chil
     -- Check for duplicates
     -- Inserts the First Element to an ScreenGui
     if (ObjElement.Parent == nil) then
-        ObjElement.Parent = self.ScreenGui
+        ObjElement.Component.Parent = self.ScreenGui
     end
 
     self.Elements[ObjElement.Instance] = ObjElement.Instance

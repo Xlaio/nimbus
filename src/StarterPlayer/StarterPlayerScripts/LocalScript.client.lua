@@ -1,8 +1,7 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Modules = ReplicatedStorage:WaitForChild("Modules");
-local UIFramework = require(Modules:FindFirstChild("UIFramework"));
+local Nimbus = require(ReplicatedStorage:FindFirstChild("Nimbus"));
 
-local X = UIFramework.new("Menu");
+local X = Nimbus.new("Menu");
 
 ---TEXTBUTTON 
 
@@ -18,7 +17,7 @@ local X = UIFramework.new("Menu");
 
 
 
-local Slider = X:CreateElement("Slider",{})
+local Button = X:CreateElement("Slider")
 -- local Button = X:CreateElement("TextButton",{Name = "Play"}):BindEvent(function()
 	
 -- end,"Activated")

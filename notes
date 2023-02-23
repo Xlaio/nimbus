@@ -1,0 +1,95 @@
+-- createSlider function creates and returns a Roblox GUI slider
+-- Parameters:
+--   minValue: the minimum value of the slider
+--   maxValue: the maximum value of the slider
+--   snappingPoints: an optional table of snapping points for the slider
+local Playergui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+local USERINPUTSERVICCE = game:GetService("UserInputService")
+local ScreenGui = Instance.new("ScreenGui",Playergui)
+local mouse = game.Players.LocalPlayer:GetMouse()
+
+-- create a new slider with values 0 to 100
+function createSlider(minValue, maxValue)
+	-- create the slider frame and components
+	local sliderFrame = Instance.new("Frame",ScreenGui)
+	sliderFrame.BackgroundTransparency = 1
+	sliderFrame.Size = UDim2.new(0, 200, 0, 20)
+	sliderFrame.Position = UDim2.fromScale(.5,.5)
+	sliderFrame.AnchorPoint = Vector2.new(.5,.5)
+
+	local sliderBar = Instance.new("Frame")
+	sliderBar.BackgroundColor3 = Color3.fromRGB(64, 64, 64)
+	sliderBar.BorderSizePixel = 0
+	sliderBar.Size = UDim2.new(1, 0, 0, 4)
+	sliderBar.Position = UDim2.new(0, 0, 0.5, -2)
+	sliderBar.Parent = sliderFrame
+
+	local sliderButton = Instance.new("TextButton")
+	sliderButton.AutoButtonColor = false
+	sliderButton.BackgroundColor3 = Color3.fromRGB(128, 128, 128)
+	sliderButton.BorderSizePixel = 0
+	sliderButton.Size = UDim2.new(0, 16, 0, 16)
+	sliderButton.Position = UDim2.new(0, 0, 0.5, -8)
+	sliderButton.Parent = sliderFrame
+
+	-- set the initial slider value to the minimum value
+	local sliderValue = 0
+	local isDragging = false
+	local snapPoints = {10, 25, 50, 75, 100}
+
+	-- Helper function to find the nearest snap point
+	local function findNearestSnapPoint(value)
+		local minDistance = math.huge
+		local nearest
+
+		for _, point in ipairs(snapPoints) do
+			point = point * 0.01
+			local distance = math.abs(value - point)
+
+			if distance < minDistance then
+				minDistance = distance
+				nearest = point
+			end
+		end
+
+		return nearest
+	end
+
+	sliderButton.MouseButton1Down:Connect(function()
+		isDragging = true
+	end)
+
+	game:GetService("UserInputService").InputEnded:Connect(function(input)
+		if isDragging and input.UserInputType == Enum.UserInputType.MouseButton1 then
+			local mousePosition = game:GetService("UserInputService"):GetMouseLocation()
+			local relativePosition = (mousePosition - sliderFrame.AbsolutePosition) / sliderFrame.AbsoluteSize
+			relativePosition = math.clamp(relativePosition.X, 0, 1)
+			local pos = findNearestSnapPoint(relativePosition)
+			sliderButton.Position = UDim2.new(pos, sliderButton.Position.Y)
+			local value = math.floor(pos * 100)
+			sliderButton.Text = tostring(value)
+			isDragging = false
+		end
+	end)
+
+	game:GetService("UserInputService").InputChanged:Connect(function(input)
+		if isDragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+			local mousePosition = game:GetService("UserInputService"):GetMouseLocation()
+			local sliderPosition = sliderFrame.AbsolutePosition
+			local sliderSize = sliderFrame.AbsoluteSize
+			local relativePosition = (mousePosition - sliderPosition) / sliderSize
+			relativePosition = math.clamp(relativePosition.X, 0, 1)
+			local value = math.floor(relativePosition * 100)
+
+			-- Snap to nearest snap point
+
+			sliderValue = value
+			sliderButton.Position = UDim2.new(relativePosition, sliderButton.Position.Y)
+			sliderButton.Text = tostring(sliderValue)
+		end
+	end)
+
+end
+
+-- create a new slider with values 0 to 100
+createSlider(0, 100)

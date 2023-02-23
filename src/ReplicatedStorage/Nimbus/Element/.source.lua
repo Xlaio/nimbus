@@ -17,13 +17,6 @@ function Element.new(Component : string, Properties : table?, Children : table?)
     return self
 end
 
-function Element:GetParent()
-    return self.Component.Parent;
-end
-
-function Element:GetSelf()
-    return self.Component
-end
 
 function Element:GetChildren()
     return self.Children
@@ -93,6 +86,16 @@ function Element:GetAttributeValue(Name : string)
         end
     end
     return self
+end
+
+function Element:__index(key)
+    if(key == "Parent") then
+        return self.Component.Parent
+    elseif(key == "Instance") then
+        return self.Component
+    else
+        return rawset(self,key)
+    end
 end
 -- Custom Events / Elements
 

@@ -36,7 +36,7 @@ end
 function UIFramework:CreateElement(Component : string, Properties : table?, Children : table?,Class : string?) : table
     if(Component == "Slider") then  
         local ObjSlider = Slider.new(Properties)
-        if (ObjSlider:GetParent() == nil) then -- Set the Parent of the Slider to either The screengui or the Parented Element
+        if (ObjSlider.Parent== nil) then -- Set the Parent of the Slider to either The screengui or the Parented Element
             ObjSlider.Parent = self.ScreenGui; 
         end
         return ObjSlider
@@ -62,11 +62,11 @@ function UIFramework:CreateElement(Component : string, Properties : table?, Chil
 
     -- Check for duplicates
     -- Inserts the First Element to an ScreenGui
-    if (ObjElement:GetParent() == nil) then
-        ObjElement.Component.Parent = self.ScreenGui
+    if (ObjElement.Parent == nil) then
+        ObjElement.Parent = self.ScreenGui
     end
 
-    self.Elements[ObjElement:GetSelf()] = ObjElement:GetSelf()
+    self.Elements[ObjElement.Instance] = ObjElement.Instance
     return ObjElement
 end
 

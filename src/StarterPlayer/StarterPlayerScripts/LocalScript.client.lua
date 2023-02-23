@@ -1,6 +1,3 @@
-
-
-
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Modules = ReplicatedStorage:WaitForChild("Modules");
 local UIFramework = require(Modules:FindFirstChild("UIFramework"));
@@ -40,5 +37,3 @@ local Slider = X:CreateElement("Slider",{})
 -- 		print("Hello world")
 -- 	end
 -- })
-
-

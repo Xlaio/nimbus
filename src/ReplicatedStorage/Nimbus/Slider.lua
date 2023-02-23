@@ -29,6 +29,7 @@ end
     Slider, Would include the Size : Heigh = Widthl, Using font Awesome images 
 ]]
 
+
 function Slider:SetProperties(Properties : table)
 
 end
